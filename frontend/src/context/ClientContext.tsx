@@ -42,7 +42,6 @@ export const ClientProvider = ({ children }: { children: ReactNode }) => {
         }
       );
       setClients([...clients, res.data]);
-      router.push("/");
     } catch (error) {
       if (axios.isAxiosError(error)) {
         setErrors(error.response?.data?.message || "Error al crear cliente");
@@ -97,7 +96,7 @@ export const ClientProvider = ({ children }: { children: ReactNode }) => {
         withCredentials: true,
       });
       setClients(clients.filter((client) => client.id !== id));
-      router.push("/clientes");
+      router.push("/dashboard/clientes");
     } catch (error) {
       if (axios.isAxiosError(error)) {
         setErrors(error.response?.data?.message || "Error al eliminar cliente");

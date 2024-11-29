@@ -36,7 +36,7 @@ export default function ClientsComponent() {
   return (
     <section className={style.users}>
       <div>
-        <Link className={style.link} href="/addclients">
+        <Link className={style.link} href="/dashboard/addclients">
           {" "}
           Crear Cliente
         </Link>
@@ -62,13 +62,13 @@ export default function ClientsComponent() {
           {filteredUsers.map((client: Client, index: number) => (
             <tr key={index}>
               <td>
-                <Link href={`/clientes/${client.id}`}>{client.name}</Link>
+                <Link href={`/dashboard/clientes/${client.id}`}>{client.name}</Link>
               </td>
               <td>
-                <Link href={`/clientes/${client.id}`}>{client.email}</Link>
+                <Link href={`/dashboard/clientes/${client.id}`}>{client.email}</Link>
               </td>
               <td>
-                <Link href={`/clientes/${client.id}`}>
+                <Link href={`/dashboard/clientes/${client.id}`}>
                   {client.identification}
                 </Link>
               </td>

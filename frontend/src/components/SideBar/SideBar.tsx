@@ -22,15 +22,15 @@ export default function SideBar() {
         </li>
 
         <li>
-          <Link href="/clientes">Clientes</Link>
+          <Link href="/dashboard/clientes">Clientes</Link>
         </li>
 
         <li>
-          <Link href="/ventas">Ventas</Link>
+          <Link href="/dashboard/ventas">Ventas</Link>
         </li>
 
         <li>
-          <Link href="/pedidos">Taller</Link>
+          <Link href="/dashboard/taller">Taller</Link>
         </li>
       </ul>
       <div className={style.footer}>

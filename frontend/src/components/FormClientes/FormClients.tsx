@@ -40,10 +40,10 @@ export default function FormClient() {
 
       if (isEditing && id) {
         await updateClient(id, clients);
-        router.push(`/clientes/${id}`);
+        router.push(`/dashboard/clientes/${id}`);
       } else {
         await createClient(clients);
-        router.push("/clientes");
+        router.push("/dashboard/clientes");
       }
     } catch (error) {
       console.log("Error al crear usuario", error);

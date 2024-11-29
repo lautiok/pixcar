@@ -35,12 +35,12 @@ export default function ClientComponents() {
           <p>Fecha de creación: {client?.createdAt}</p>
           <p>Fecha de actualización: {client?.updatedAt}</p>
           <div className={style.buttonContainer}>
-            <Link href={`/clientes/${id}/edit`}>
+            <Link href={`/dashboard/clientes/${id}/edit`}>
               <button>Editar</button>
             </Link>
             <button
               onClick={() => {
-                deleteClient(id);
+                deleteClient(id);                
               }}
             >
               Eliminar
