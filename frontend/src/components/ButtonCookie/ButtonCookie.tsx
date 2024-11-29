@@ -10,7 +10,7 @@ export default function ButtonCookie() {
       credentials: "include",
     });
 
-    router.push("/login");
+    router.push("/");
   };
   return (
     <button className={style.button} onClick={handleLogout}>

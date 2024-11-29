@@ -1,6 +1,6 @@
 "use client";
 import style from "./vehiclecomponents.module.css";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useVehicule } from "@/context/VehiculeContext";
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -9,6 +9,7 @@ export default function VehicleComponents() {
   const { id }: { id: string } = useParams();
   const { vehicule, getVehicule, deleteVehicule } = useVehicule();
   const [isloading, setIsloading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     try {
@@ -48,6 +49,7 @@ export default function VehicleComponents() {
             <button
               onClick={() => {
                 deleteVehicule(id);
+                router.push("/dashboard/vehiculos");
               }}
             >
               Eliminar

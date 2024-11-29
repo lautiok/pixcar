@@ -10,7 +10,7 @@ interface Client {
   vehicles?: string[];
   createdAt?: string;
   updatedAt?: string;
-  id?: string;
+  id: string;
 }
 
 interface ClientContextProps {

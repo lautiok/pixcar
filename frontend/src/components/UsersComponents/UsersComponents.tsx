@@ -41,7 +41,7 @@ export default function UsersComponents() {
   return (
     <section className={style.users}>
       <div>
-        <Link className={style.link} href="/addusers">
+        <Link className={style.link} href="/dashboard/addusers">
           {" "}
           Crear usuario
         </Link>
@@ -67,13 +67,13 @@ export default function UsersComponents() {
           {filteredUsers.map((user: User, index: number) => (
             <tr key={index}>
               <td>
-                <Link href={`/users/${user.id}`}>{user.name}</Link>
+                <Link href={`/dashboard/users/${user.id}`}>{user.name}</Link>
               </td>
               <td>
-                <Link href={`/users/${user.id}`}>{user.email}</Link>
+                <Link href={`/dashboard/users/${user.id}`}>{user.email}</Link>
               </td>
               <td>
-                <Link href={`/users/${user.id}`}>{user.role}</Link>
+                <Link href={`/dashboard/users/${user.id}`}>{user.role}</Link>
               </td>
             </tr>
           ))}

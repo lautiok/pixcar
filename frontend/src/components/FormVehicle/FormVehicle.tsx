@@ -37,12 +37,10 @@ export default function FormVehicle() {
   const { clients, getClients } = useClient();
   const [client, setClient] = useState<Client | null>(null);
 
-  // Obtener lista de clientes al cargar el componente
   useEffect(() => {
     getClients();
   }, [getClients]);
 
-  // Obtener el vehículo para edición
   useEffect(() => {
     if (id) {
       setIsEditing(true);
@@ -116,18 +114,20 @@ export default function FormVehicle() {
         />
         {errors.color && <p className={style.error}>{errors.color.message}</p>}
 
-        <select
-          onChange={(e) =>
-            setClient(clients.find((c) => c.id === e.target.value) || null)
-          }
-        >
-          <option value="">Seleccione un cliente</option>
-          {clients.map((cliente) => (
-            <option key={cliente.id} value={cliente.id}>
-              {cliente.name}
-            </option>
-          ))}
-        </select>
+        {!id && (
+          <select
+            onChange={(e) =>
+              setClient(clients.find((c) => c.id === e.target.value) || null)
+            }
+          >
+            <option value="">Seleccione un cliente</option>
+            {clients.map((cliente) => (
+              <option key={cliente.id} value={cliente.id}>
+                {cliente.name}
+              </option>
+            ))}
+          </select>
+        )}
 
         <input
           type="text"

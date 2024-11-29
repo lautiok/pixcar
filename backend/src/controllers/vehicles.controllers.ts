@@ -71,14 +71,14 @@ export const updateVehicle = async (req: Request, res: Response) => {
     res.status(400).json({ message: "El id es requerido" });
     return;
   }
-  const { placa, color, modelo, cliente, status, marca, price, kilometros, año } = req.body;
+  const { placa, color, modelo, status, marca, price, kilometros, año } =
+    req.body;
 
   try {
     const updatedVehicle = await vehicleService.update(id, {
       placa,
       color,
       modelo,
-      cliente,
       status,
       marca,
       price,

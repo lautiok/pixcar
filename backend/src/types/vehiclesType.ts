@@ -7,7 +7,7 @@ export interface Vehicle {
   modelo: string;
   placa: string;
   color: string;
-  cliente: Client;
+  cliente?: Client;
   status?: string;
   price: string;
   kilometros: string;

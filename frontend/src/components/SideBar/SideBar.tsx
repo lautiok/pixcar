@@ -14,15 +14,14 @@ export default function SideBar() {
       </div>
       <ul>
         <li>
-          <Link href="/">Inicio</Link>
+          <Link href="/dashboard/">Inicio</Link>
+        </li>
+        <li>
+          <Link href="/dashboard/clientes">Clientes</Link>
         </li>
 
         <li>
           <Link href="/dashboard/vehiculos">Vehiculos</Link>
-        </li>
-
-        <li>
-          <Link href="/dashboard/clientes">Clientes</Link>
         </li>
 
         <li>

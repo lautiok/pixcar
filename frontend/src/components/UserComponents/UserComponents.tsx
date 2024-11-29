@@ -35,7 +35,7 @@ export default function UserComponents() {
           <p>Fecha de creación: {user?.createdAt}</p>
           <p>Fecha de actualización: {user?.updatedAt}</p>
           <div className={style.buttonContainer}>
-            <Link href={`/users/${id}/edit`}>
+            <Link href={`/dashboard/users/${id}/edit`}>
               <button>Editar</button>
             </Link>
             <button
