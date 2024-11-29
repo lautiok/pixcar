@@ -1,0 +1,123 @@
+openapi: 3.0.0
+info:
+  title: API de Autenticación
+  description: API para la autenticación de usuarios (login y logout)
+  version: 1.0.0
+components:
+  schemas:
+    Auth:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          description: El correo electrónico del usuario
+          example: "user@example.com"
+        password:
+          type: string
+          description: La contraseña del usuario
+          example: "12345678"
+    PublicUser:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nombre del usuario
+          example: "John Doe"
+        identification:
+          type: string
+          description: Identificación del usuario
+          example: "12345678"
+        email:
+          type: string
+          description: Correo electrónico del usuario
+          example: "user@example.com"
+        role:
+          type: string
+          description: Rol del usuario
+          example: "seller"
+paths:
+  /api/auth/login:
+    post:
+      summary: Autentica al usuario y devuelve un token de acceso
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Auth"
+      responses:
+        "200":
+          description: Usuario autenticado exitosamente, se devuelve el token y los datos del usuario
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    $ref: "#/components/schemas/PublicUser"
+        "400":
+          description: Error en la autenticación, por ejemplo, si el email no existe, la contraseña es incorrecta, etc.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Descripción del error
+                    example: "Contraseña incorrecta"
+        "500":
+          description: Error en el servidor
+
+  /api/auth/verifyToken:
+    post:
+      summary: Verifica el token de acceso y devuelve los datos del usuario
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+                  description: Token de acceso
+                  example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyMzQ1Njc4OTAiLCJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+      responses:
+        "200":
+          description: Token de acceso válido, se devuelve los datos del usuario
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PublicUser"
+        "400":
+          description: Error en el token de acceso, por ejemplo, si el token no es válido, etc.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Descripción del error
+                    example: "Token no valido"
+        "500":
+          description: Error en el servidor
+
+  /api/auth/logout:
+    post:
+      summary: Cierra la sesión del usuario y elimina el token de acceso
+      tags:
+        - Auth
+      responses:
+        "200":
+          description: Sesión cerrada exitosamente y token eliminado
+        "500":
+          description: Error en el servidor

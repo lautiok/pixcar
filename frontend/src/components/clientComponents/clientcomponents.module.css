@@ -1,0 +1,42 @@
+.user {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4rem;
+}
+
+.user h1 {
+  color: var(--primary-color);
+  font-size: 2rem;
+}
+
+.data {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.data p {
+  border-bottom: 2px solid black;
+  padding: 0.5rem;
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.buttonContainer button {
+  width: 200px;
+  padding: 1rem 0;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: var(--primary-color);
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+}

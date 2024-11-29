@@ -1,0 +1,149 @@
+openapi: 3.0.0
+info:
+  title: API de Usuarios
+  description: API para gestionar usuarios (crear, obtener, actualizar y eliminar)
+  version: 1.0.0
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID del usuario
+          example: "640be2f15e1af5c456e7b0c8"
+        name:
+          type: string
+          description: Nombre del usuario
+          example: "Juan Pérez"
+        identification:
+          type: string
+          description: Identificación única del usuario
+          example: "123456789"
+        email:
+          type: string
+          description: Correo electrónico del usuario
+          example: "juan.perez@example.com"
+        password:
+          type: string
+          description: Contraseña del usuario (almacenada como hash)
+          example: "hashedpassword123"
+        role:
+          type: string
+          description: Rol del usuario (admin, seller, mecanic)
+          enum:
+            - admin
+            - seller
+            - mecanic
+          example: "seller"
+        createdAt:
+          type: string
+          format: date-time
+          description: Fecha de creación del usuario
+        updatedAt:
+          type: string
+          format: date-time
+          description: Fecha de última actualización del usuario
+paths:
+  /api/users:
+    post:
+      summary: Crea un nuevo usuario
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        "201":
+          description: Usuario creado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "400":
+          description: Error en la solicitud
+
+    get:
+      summary: Obtiene la lista de todos los usuarios
+      tags:
+        - Users
+      responses:
+        "200":
+          description: Lista de usuarios
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+        "400":
+          description: Error al obtener los usuarios
+
+  /api/users/{id}:
+    get:
+      summary: Obtiene un usuario por ID
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del usuario
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Información del usuario
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "404":
+          description: Usuario no encontrado
+
+    put:
+      summary: Actualiza un usuario existente
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del usuario
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        "200":
+          description: Usuario actualizado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "400":
+          description: Error al actualizar el usuario
+
+    delete:
+      summary: Elimina un usuario por ID
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del usuario
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Usuario eliminado exitosamente
+        "400":
+          description: Error al eliminar el usuario

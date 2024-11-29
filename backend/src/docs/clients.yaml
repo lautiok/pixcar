@@ -1,0 +1,169 @@
+openapi: 3.0.0
+info:
+  title: API de Clientes
+  description: API para gestionar clientes (crear, obtener, actualizar y eliminar)
+  version: 1.0.0
+components:
+  schemas:
+    Client:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID del cliente
+          example: "640be2f15e1af5c456e7b0c8"
+        name:
+          type: string
+          description: Nombre del cliente
+          example: "Ana Martínez"
+        email:
+          type: string
+          description: Correo electrónico del cliente
+          example: "ana.martinez@example.com"
+        identification:
+          type: string
+          description: Identificación única del cliente
+          example: "987654321"
+        createdAt:
+          type: string
+          format: date-time
+          description: Fecha de creación del cliente
+        vehicles:
+          type: array
+          description: Lista de vehículos asociados al cliente
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: ID del vehículo
+                example: "vehicle123"
+              model:
+                type: string
+                description: Modelo del vehículo
+                example: "Toyota Corolla"
+paths:
+  /api/clients:
+    post:
+      summary: Crea un nuevo cliente
+      tags:
+        - Clients
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Client"
+      responses:
+        "201":
+          description: Cliente creado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Client"
+        "400":
+          description: Error en la solicitud
+
+    get:
+      summary: Obtiene la lista de todos los clientes
+      tags:
+        - Clients
+      responses:
+        "200":
+          description: Lista de clientes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Client"
+        "400":
+          description: Error al obtener los clientes
+
+  /api/clients/{id}:
+    get:
+      summary: Obtiene un cliente por ID
+      tags:
+        - Clients
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del cliente
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Información del cliente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Client"
+        "404":
+          description: Cliente no encontrado
+
+    put:
+      summary: Actualiza un cliente existente
+      tags:
+        - Clients
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del cliente
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Client"
+      responses:
+        "200":
+          description: Cliente actualizado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Client"
+        "400":
+          description: Error al actualizar el cliente
+
+    delete:
+      summary: Elimina un cliente por ID
+      tags:
+        - Clients
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del cliente
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Cliente eliminado exitosamente
+        "400":
+          description: Error al eliminar el cliente
+
+  /api/clients/email/{email}:
+    get:
+      summary: Obtiene un cliente por correo electrónico
+      tags:
+        - Clients
+      parameters:
+        - name: email
+          in: path
+          required: true
+          description: Correo electrónico del cliente
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Información del cliente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Client"
+        "404":
+          description: Cliente no encontrado

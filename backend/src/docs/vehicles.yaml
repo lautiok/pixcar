@@ -1,0 +1,170 @@
+openapi: 3.0.0
+info:
+  title: API de Vehículos
+  description: API para gestionar vehículos (crear, obtener, actualizar y eliminar)
+  version: 1.0.0
+components:
+  schemas:
+    Vehicle:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID del vehículo
+          example: "640be2f15e1af5c456e7b0c9"
+        placa:
+          type: string
+          description: Placa del vehículo
+          example: "ABC-1234"
+        color:
+          type: string
+          description: Color del vehículo
+          example: "Rojo"
+        modelo:
+          type: string
+          description: Modelo del vehículo
+          example: "Toyota Corolla"
+        marca:
+          type: string
+          description: Marca del vehículo
+          example: "Toyota"
+        cliente:
+          type: string
+          description: ID del cliente asociado al vehículo
+          example: "640be2f15e1af5c456e7b0c8"
+        status:
+          type: string
+          description: Estado del vehículo (e.g., activo, inactivo)
+          example: "activo"
+      required:
+        - placa
+        - color
+        - modelo
+        - cliente
+        - status
+        - marca
+paths:
+  /api/vehicles:
+    post:
+      summary: Crea un nuevo vehículo
+      tags:
+        - Vehicles
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Vehicle"
+      responses:
+        "201":
+          description: Vehículo creado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Vehicle"
+        "400":
+          description: Error en la solicitud
+
+    get:
+      summary: Obtiene la lista de todos los vehículos
+      tags:
+        - Vehicles
+      responses:
+        "200":
+          description: Lista de vehículos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Vehicle"
+        "400":
+          description: Error al obtener los vehículos
+
+  /api/vehicles/{id}:
+    get:
+      summary: Obtiene un vehículo por ID
+      tags:
+        - Vehicles
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del vehículo
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Información del vehículo
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Vehicle"
+        "404":
+          description: Vehículo no encontrado
+
+    put:
+      summary: Actualiza un vehículo existente
+      tags:
+        - Vehicles
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del vehículo
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Vehicle"
+      responses:
+        "200":
+          description: Vehículo actualizado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Vehicle"
+        "400":
+          description: Error al actualizar el vehículo
+
+    delete:
+      summary: Elimina un vehículo por ID
+      tags:
+        - Vehicles
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del vehículo
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Vehículo eliminado exitosamente
+        "400":
+          description: Error al eliminar el vehículo
+
+  /api/vehicles/placa/{placa}:
+    get:
+      summary: Obtiene un vehículo por placa
+      tags:
+        - Vehicles
+      parameters:
+        - name: placa
+          in: path
+          required: true
+          description: Placa del vehículo
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Información del vehículo
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Vehicle"
+        "404":
+          description: Vehículo no encontrado
