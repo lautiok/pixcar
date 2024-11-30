@@ -36,6 +36,7 @@ export default function FormVehicle() {
   const router = useRouter();
   const { clients, getClients } = useClient();
   const [client, setClient] = useState<Client | null>(null);
+  const [status, setStatus] = useState<string>("");
 
   useEffect(() => {
     getClients();
@@ -67,6 +68,7 @@ export default function FormVehicle() {
       const vehicle = {
         ...data,
         cliente: client?.id || "",
+        status: status,
       };
 
       if (isEditing && id) {
@@ -126,6 +128,15 @@ export default function FormVehicle() {
                 {cliente.name}
               </option>
             ))}
+          </select>
+        )}
+
+        {id && (
+          <select onChange={(e) => setStatus(e.target.value)} value={status}>
+            <option value="">Seleccione un estado</option>
+            <option value="taller">Taller</option>
+            <option value="venta">Venta</option>
+            <option value="reservado">Reservado</option>
           </select>
         )}
 

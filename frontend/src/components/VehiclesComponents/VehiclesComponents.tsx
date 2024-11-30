@@ -30,8 +30,8 @@ export default function VehiclesComponents() {
 
   useEffect(() => {
     if (vehicules) {
-      const filtered = vehicules.filter(
-        (vehicule: Vehicule) =>
+      const filtered = vehicules.filter((vehicule: Vehicule) => {
+        const matchesSearchTerm =
           vehicule.placa.toLowerCase().includes(searchTerm.toLowerCase()) ||
           vehicule.modelo.toLowerCase().includes(searchTerm.toLowerCase()) ||
           vehicule.marca.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -40,17 +40,23 @@ export default function VehiclesComponents() {
           vehicule.kilometros
             .toLowerCase()
             .includes(searchTerm.toLowerCase()) ||
-          vehicule.color.toLowerCase().includes(searchTerm.toLowerCase())
-      );
+          vehicule.color.toLowerCase().includes(searchTerm.toLowerCase());
+
+        if (user?.role === "admin") {
+          return matchesSearchTerm;
+        }
+
+        return vehicule.status === "venta" && matchesSearchTerm;
+      });
+
       setFilteredUsers(filtered);
     }
-  }, [searchTerm, vehicules]);
+  }, [searchTerm, vehicules, user?.role]);
 
   return (
     <section className={style.users}>
       <div>
         <Link className={style.link} href="/dashboard/addvehicle">
-          {" "}
           Crear vehiculos
         </Link>
         <search>
@@ -120,7 +126,7 @@ export default function VehiclesComponents() {
 
           {filteredUsers.length === 0 && (
             <tr>
-              <td colSpan={3}>No hay vehiculos</td>
+              <td colSpan={7}>No hay vehiculos</td>
             </tr>
           )}
         </tbody>
