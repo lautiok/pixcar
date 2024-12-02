@@ -25,6 +25,12 @@ export const createVehicle = async (req: Request, res: Response) => {
   }
 
   try {
+    const existingVehicle = await vehicleService.findByPlate(placa);
+    if (existingVehicle) {
+      res.status(400).json({ message: "La placa ya existe" });
+      return;
+    }
+
     const newVehicle = await vehicleService.create({
       placa,
       color,

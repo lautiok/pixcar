@@ -1,8 +1,8 @@
 openapi: 3.0.0
 info:
   title: API de Autenticación
-  description: API para la autenticación de usuarios (login y logout)
-  version: 1.0.0
+  description: API para la autenticación de usuarios (login, logout, recuperación y cambio de contraseña)
+  version: 1.1.0
 components:
   schemas:
     Auth:
@@ -38,6 +38,34 @@ components:
           type: string
           description: Rol del usuario
           example: "seller"
+    ForgetPasswordRequest:
+      type: object
+      required:
+        - email
+      properties:
+        email:
+          type: string
+          description: El correo electrónico del usuario
+          example: "user@example.com"
+    ChangePasswordRequest:
+      type: object
+      required:
+        - newPassword
+        - confirmPassword
+        - token
+      properties:
+        newPassword:
+          type: string
+          description: Nueva contraseña del usuario
+          example: "newSecurePassword123"
+        confirmPassword:
+          type: string
+          description: Confirmación de la nueva contraseña
+          example: "newSecurePassword123"
+        token:
+          type: string
+          description: Token de recuperación de contraseña
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 paths:
   /api/auth/login:
     post:
@@ -61,16 +89,7 @@ paths:
                   user:
                     $ref: "#/components/schemas/PublicUser"
         "400":
-          description: Error en la autenticación, por ejemplo, si el email no existe, la contraseña es incorrecta, etc.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    description: Descripción del error
-                    example: "Contraseña incorrecta"
+          description: Error en la autenticación
         "500":
           description: Error en el servidor
 
@@ -89,25 +108,16 @@ paths:
                 token:
                   type: string
                   description: Token de acceso
-                  example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyMzQ1Njc4OTAiLCJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                  example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
       responses:
         "200":
-          description: Token de acceso válido, se devuelve los datos del usuario
+          description: Token válido
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/PublicUser"
         "400":
-          description: Error en el token de acceso, por ejemplo, si el token no es válido, etc.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    description: Descripción del error
-                    example: "Token no valido"
+          description: Token inválido
         "500":
           description: Error en el servidor
 
@@ -118,6 +128,62 @@ paths:
         - Auth
       responses:
         "200":
-          description: Sesión cerrada exitosamente y token eliminado
+          description: Sesión cerrada exitosamente
+        "500":
+          description: Error en el servidor
+
+  /api/auth/forget-password:
+    post:
+      summary: Envía un correo electrónico con un enlace para restablecer la contraseña
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ForgetPasswordRequest"
+      responses:
+        "200":
+          description: Email enviado exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de éxito
+                    example: "Se ha enviado el mail"
+        "400":
+          description: Error en el envío del correo
+        "500":
+          description: Error en el servidor
+
+  /api/auth/change-password:
+    post:
+      summary: Cambia la contraseña del usuario utilizando un token
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChangePasswordRequest"
+      responses:
+        "200":
+          description: Contraseña cambiada exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de éxito
+                    example: "Contraseña actualizada exitosamente"
+        "400":
+          description: Error en el cambio de contraseña
         "500":
           description: Error en el servidor

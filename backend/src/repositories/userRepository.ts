@@ -30,6 +30,20 @@ export class UserRepository implements UIuserRepository {
     }
     return user;
   }
+
+  async updatePassword(id: string, password: string): Promise<User> {
+    const user = await UserModel.findByIdAndUpdate(
+      id,
+      { password },
+      { new: true }
+    );
+    if (!user) {
+      throw new Error(`User with ID ${id} not found`);
+    }
+    return user;
+  }
+
+
   async delete(id: string): Promise<void> {
     const user = await UserModel.findByIdAndDelete(id);
     if (!user) {

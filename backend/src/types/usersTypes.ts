@@ -13,6 +13,7 @@ export interface User {
 
 export interface UIuserRepository extends Repository<User> {
   findOne: (query: Query) => Promise<User | null>;
+  updatePassword: (id: string, password: string) => Promise<User>;
 }
 
 export interface UIuserService {

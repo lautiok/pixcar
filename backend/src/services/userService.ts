@@ -28,6 +28,10 @@ export class UserService implements UIuserService {
   async update(id: string, data: User): Promise<User> {
     return await this.userRespository.update(id, data);
   }
+
+  async updatePassword(id: string, password: string): Promise<User> {
+    return await this.userRespository.updatePassword(id, password);
+  }
   async delete(id: string): Promise<void> {
     return await this.userRespository.delete(id);
   }

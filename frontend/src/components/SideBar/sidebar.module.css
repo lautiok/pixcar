@@ -17,14 +17,14 @@
   margin-top: 2rem;
 }
 
-.logo h1 {
+.logo a {
   font-size: 2rem;
   font-weight: 800;
   color: #fff;
   text-transform: uppercase;
 }
 
-.logo h1 span {
+.logo a span {
   color: var(--primary-color);
 }
 

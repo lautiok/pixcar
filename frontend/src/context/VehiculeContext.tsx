@@ -53,7 +53,7 @@ export const VehiculeProvider = ({ children }: { children: ReactNode }) => {
       } else {
         setErrors("Error desconocido al crear vehiculo");
       }
-      console.error("Create vehicule failed", error);
+      console.log("Create vehicule failed", error);
       throw new Error("Error al crear vehiculo");
     }
   };

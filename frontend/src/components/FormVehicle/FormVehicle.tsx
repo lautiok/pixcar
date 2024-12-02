@@ -29,8 +29,13 @@ export default function FormVehicle() {
     setValue,
     formState: { errors },
   } = useForm<VehicleFormInputs>();
-  const { createVehicule, getVehicule, vehicule, updateVehicule } =
-    useVehicule();
+  const {
+    createVehicule,
+    getVehicule,
+    vehicule,
+    updateVehicule,
+    errors: vehiculeErrors,
+  } = useVehicule();
   const [isEditing, setIsEditing] = useState(false);
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
@@ -79,7 +84,7 @@ export default function FormVehicle() {
 
       router.push("/dashboard/vehiculos");
     } catch (error) {
-      console.error("Error al procesar el vehículo:", error);
+      console.log("Error al procesar el vehículo:", error);
     }
   };
 
@@ -180,6 +185,8 @@ export default function FormVehicle() {
           })}
         />
         {errors.año && <p className={style.error}>{errors.año.message}</p>}
+
+        {vehiculeErrors && <p className={style.error}>{vehiculeErrors}</p>}
 
         <button type="submit">
           {isEditing ? "Actualizar Vehículo" : "Crear Vehículo"}

@@ -8,9 +8,9 @@ export default function SideBar() {
   return (
     <div className={style.sidebar}>
       <div className={style.logo}>
-        <h1>
+        <a href="/dashboard/">
           PIX<span>CAR</span>
-        </h1>
+        </a>
       </div>
       <ul>
         <li>
